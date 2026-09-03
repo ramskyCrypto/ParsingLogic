@@ -1,8 +1,29 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'api_service.dart';
 import 'user_model.dart';
 
+const String jsonString = '''
+{
+  "id": 1,
+  "name": "Ramadhan Putra Wijaya",
+  "username": "ramadhan",
+  "email": "ramadhan@gmail.com",
+  "phone": "081234567890"
+}
+''';
+
 void main() {
+  final Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+  final UserModel user = UserModel.fromJson(jsonData);
+
+  print('ID: ${user.id}');
+  print('Nama: ${user.name}');
+  print('Username: ${user.username}');
+  print('Email: ${user.email}');
+  print('Phone: ${user.phone}');
+
   runApp(const MyApp());
 }
 
