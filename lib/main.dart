@@ -14,16 +14,6 @@ const String jsonString = '''
 ''';
 
 void main() {
-  final Map<String, dynamic> jsonData = jsonDecode(jsonString);
-
-  final UserModel user = UserModel.fromJson(jsonData);
-
-  print('ID: ${user.id}');
-  print('Nama: ${user.name}');
-  print('Username: ${user.username}');
-  print('Email: ${user.email}');
-  print('Phone: ${user.phone}');
-
   runApp(const MyApp());
 }
 
@@ -55,6 +45,11 @@ class _UserPageState extends State<UserPage> {
 
   late Future<List<UserModel>> futureUsers;
 
+  // Mengubah jsonString menjadi objek UserModel
+  final UserModel testUser = UserModel.fromJson(
+    jsonDecode(jsonString),
+  );
+
   @override
   void initState() {
     super.initState();
@@ -68,8 +63,8 @@ class _UserPageState extends State<UserPage> {
         title: const Text(
           'Daftar Pelanggan PT.Ramadhan Putra Wijaya',
         ),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.yellow,
+        foregroundColor: Colors.black,
       ),
       body: FutureBuilder<List<UserModel>>(
         future: futureUsers,
@@ -99,9 +94,16 @@ class _UserPageState extends State<UserPage> {
 
           return ListView.builder(
             padding: const EdgeInsets.all(12),
-            itemCount: users.length,
+
+            // +1 karena kita menambahkan testUser dari jsonString
+            itemCount: users.length + 1,
+
             itemBuilder: (context, index) {
-              final user = users[index];
+
+              // Data jsonString ditampilkan sebagai data pertama
+              final user = index == 0
+                  ? testUser
+                  : users[index - 1];
 
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
